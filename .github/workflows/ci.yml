@@ -1,0 +1,30 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - main # Запускать при пуше в ветку main
+  pull_request:
+    branches:
+      - main # Запускать при создании Pull Request в ветку main
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest # Используем последнюю версию Ubuntu
+
+    steps:
+      # Шаг 1: Checkout кода из репозитория
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Шаг 2: Установка зависимостей (make setup)
+      - name: Setup project
+        run: make setup
+
+      # Шаг 3: Запуск линтера (make lint)
+      - name: Run linter
+        run: make lint
+
+      # Шаг 4: Запуск тестов (make test)
+      - name: Run tests
+        run: make test
